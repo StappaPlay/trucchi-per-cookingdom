@@ -1,36 +1,35 @@
 /**
- * StappaPlay - Simple HTML5 Audio/Video Player Generator
+ * StappaPlay - Lightweight HTML5 Video Player Utility
  * Author: Paolo
  * License: Custom
  */
 
 class StappaPlay {
-    constructor(options = {}) {
-        this.options = {
-            type: options.type || 'audio', // 'audio' or 'video'
-            source: options.source || '',
-            autoplay: options.autoplay || false,
-            controls: options.controls !== false,
-            container: options.container || document.body
-        };
-    }
+    /**
+     * Creates a video player inside the specified container.
+     * @param {string} containerId - The ID of the container element.
+     * @param {string} videoUrl - The URL of the video to play.
+     */
+    static createPlayer(containerId, videoUrl) {
+        const container = document.getElementById(containerId);
+        if (!container) {
+            console.error(`[StappaPlay] Container with ID '${containerId}' not found.`);
+            return;
+        }
 
-    render() {
-        const element = document.createElement(this.options.type);
-        element.src = this.options.source;
-        element.autoplay = this.options.autoplay;
-        element.controls = this.options.controls;
-        element.style.width = '100%';
-        
-        this.options.container.appendChild(element);
-        console.log(`StappaPlay: ${this.options.type} player rendered.`);
-        
-        return element;
+        const video = document.createElement('video');
+        video.src = videoUrl;
+        video.controls = true;
+        video.style.maxWidth = '100%';
+        video.style.height = 'auto';
+
+        container.appendChild(video);
+
+        console.log('[StappaPlay] Video player successfully created.');
     }
 }
 
-// Example Usage:
-// const player = new StappaPlay({ type: 'video', source: 'https://example.com/video.mp4' });
-// player.render();
+// Example usage:
+// StappaPlay.createPlayer('video-container', 'https://www.w3schools.com/html/mov_bbb.mp4');
 
 module.exports = StappaPlay;
